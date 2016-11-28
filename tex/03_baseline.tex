@@ -116,8 +116,8 @@ $F$为机票的特征集合，$W(f)$为目标用户在特征$f$上的权重，$f
 \Ensure 
 \Statex 排序后的机票列表 $R$
 
-\State $P \gets extractPref(O,F)$;
-\State $W \gets getPrefWeight(O,F)$;
+\State $P \gets extractDistribution(O,F)$;
+\State $W \gets getWeight(O,F)$;
 \State $R \gets \emptyset$;
 \For { $t \in C$}
 \State $G_t \gets 0$
@@ -142,7 +142,7 @@ $F$为机票的特征集合，$W(f)$为目标用户在特征$f$上的权重，$f
 \Ensure
 \Statex 用户的特征分布模型 $P$
 
-\Function {extractPref}{$O, F$}
+\Function {extractDistribution}{$O, F$}
 \State $P \gets \emptyset$;
 \For{$order \in O$}
 \For{$f \in F$}
@@ -152,7 +152,7 @@ $F$为机票的特征集合，$W(f)$为目标用户在特征$f$上的权重，$f
 \State \Return $P$;
 \EndFunction
 
-\Function {getPrefWeight}{$P$}
+\Function {getWeight}{$P$}
 \State $W \gets \emptyset$
 \For{$p_f \in P$}
 \State $W_f \gets \frac{\ln |p_f| - S(\mathbf{p_f})}{\sum_{f \in F}(\ln |f| - S(\mathbf{f}))}$

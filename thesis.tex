@@ -5,7 +5,7 @@
 
 % 双面打印
 %\documentclass[master, fontset=none, openright, twoside,review]{sjtuthesis}
-\documentclass[master, fontset=none, openright, twoside,submit]{sjtuthesis}
+\documentclass[master, fontset=none, openright, twoside,submit,zihao=-4]{sjtuthesis}
 
 % \documentclass[bachelor, fontset=adobe, openany, oneside, submit]{sjtuthesis} 
 % \documentclass[master, adobefonts, review]{sjtuthesis} 
@@ -14,7 +14,7 @@
 %   fontset=adobe|windows,  	% 只测试了adobe
 %   oneside|twoside,		% 单面打印，双面打印(奇偶页交换页边距，默认)
 %   openany|openright, 		% 可以在奇数或者偶数页开新章|只在奇数页开新章(默认)
-%   zihao=-4|5,, 		% 正文字号：小四、五号(默认)
+%   zihao=-4|5, 		% 正文字号：小四、五号(默认)
 %   review,	 		% 盲审论文，隐去作者姓名、学号、导师姓名、致谢、发表论文和参与的项目
 %   submit			% 定稿提交的论文，插入签名扫描版的原创性声明、授权声明 
 % ]
@@ -33,7 +33,6 @@
 \maketitle
 
 \makeenglishtitle
-
 
 \makeatletter
 \ifsjtu@submit\relax

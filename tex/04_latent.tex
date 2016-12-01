@@ -7,6 +7,42 @@
 
 \section{问题建模及目标函数优化}
 
+\begin{equation}
+	V(u,i) = \phi_u^T * \theta_i
+\end{equation}
+
+\begin{equation}
+	\phi_u = W_u * K_u
+\end{equation}
+
+\begin{equation}
+	\theta_i = M_i * F_i
+\end{equation}
+
+
+
+
+\begin{eqnarray}
+    P(i,j) & = & P(V(u,i) > V(u,j)) \nonumber \\
+	 & = &\frac{1}{1+e^{-(V(u,i) - V(u,j))}}
+\end{eqnarray}
+
+\begin{equation}
+	W_u = W_u + \eta(\frac{\partial \log P(i,j)}{W_u} - \lambda*W_u)
+\end{equation}
+
+\begin{equation}
+	M_i = M_i + \eta(\frac{\partial \log P(i,j)}{M_i} - \lambda*M_i)
+\end{equation}
+
+\begin{equation}
+  \arg\min_{W,M} : - \log P(i,j) + \frac{\lambda}{2} * (\sum_{i,j \in W}W_{i,j}^2 + \sum_{i,j \in M}M_{i,j}^2)
+\end{equation}
+
+\begin{equation}
+	R(I) =  R(P_u^T * F_I) + R(\phi_u^T * \theta_I)
+\end{equation}
+
 \section{结合隐性特征的机票个性化推荐}
 
 \section{实验结果分析}

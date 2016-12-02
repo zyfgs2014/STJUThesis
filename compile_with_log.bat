@@ -20,4 +20,4 @@ del *.aux *.run.xml *.bcf *.log *.xdv *.bbl *.bak *.blg *.out *.thm *.toc *.sync
 cd tex
 del *.aux *.run.xml *.bcf *.log *.xdv *.bbl *.bak *.blg *.out *.thm *.toc *.synctex* *.glg *.glo *.gls *.ist *.idx *.ilg *.ind *.acn *.acr *.lof *.lot *.loa *.alg *.glsdefs >nul 2>nul
 echo finish...
-ping 127.0.0.1 -n 3 > nul
+ping 127.0.0.1 -n 2 > nul

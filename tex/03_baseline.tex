@@ -222,7 +222,7 @@ $F$为机票的特征集合，$W(f)$为目标用户在特征$f$上的权重，$f
 A_{rec}(T) =
 \begin{cases}
 1 & \mbox{if |C| = 1}\\
-1 - \frac{index_T-1}{|C|-1} & \mbox{if |C| > 1}
+1 - \frac{T_{index}-1}{|C|-1} & \mbox{if |C| > 1}
 \end{cases}
 \end{equation}
 
@@ -241,7 +241,7 @@ MA = \frac{\sum_{i=1}^{|M|}A_{rec}(M_i)}{|M|}
 
 \begin{figure}
  \centering
- \includegraphics[width=0.75\linewidth]{03/5_res_of_rec.pdf}
+ \includegraphics[width=0.6\linewidth]{03/5_res_of_rec.pdf}
  \bicaption[fig:res_pref_rec]{基线推荐结果}{四条航线推荐结果的平均准确率}{Fig}{Mean Accuracy of Recommendation on Airlines}
 \end{figure}
 

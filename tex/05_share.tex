@@ -16,7 +16,7 @@
 
 \begin{figure}
  \centering
- \includegraphics[width=0.5\linewidth]{05/1_fill_id.png}
+ \includegraphics[width=0.7\linewidth,height=0.5\linewidth]{05/1_fill_id.png}
  \bicaption[fig:fill_id]{填写乘客信息}{用户在票务网站填写身份信息}{Fig}{Users Fill in Their Identification on Website}
 \end{figure}
 
@@ -79,7 +79,7 @@ $K$ & 主题数量\\ \hline
 
 \begin{figure}
  \centering
- \includegraphics[width=0.45\linewidth]{05/2_graph.eps}
+ \includegraphics[width=0.45\linewidth]{05/2_graph.pdf}
  \bicaption[fig:pro_graph]{模型概率图}{作者主题模型的概率图}{Fig}{Probability Graph for the Author-topic Model}
 \end{figure}
 
@@ -194,7 +194,7 @@ p(x=p|o_n,\Theta,\Phi) \propto p(p)\prod_{w \in o_n}\sum_t p(t|w)p(w|t,p)
 
 \begin{figure}
  \centering
- \includegraphics[width=0.6\linewidth]{05/3_overview.eps}
+ \includegraphics[width=0.6\linewidth]{05/3_overview.pdf}
  \bicaption[fig:over_pr]{预测推荐概览}{结合乘客预测的机票推荐概览}{Fig}{Overview of Passenger Prediction based Recommendation}
 \end{figure}
 
@@ -216,10 +216,94 @@ p(x=p|o_n,\Theta,\Phi) \propto p(p)\prod_{w \in o_n}\sum_t p(t|w)p(w|t,p)
 
 \subsection{实验数据集与评价指标}
 
+\subsubsection{实验数据集描述}
+我们的实验数据集是用户在多航线上的机票订单数据。数据以用户ID区分每个账户，以订单ID区分每条订单，以加密后的乘客证件号区分订单中的每位乘客。数据集引入乘客字段后，每个订单ID可能对应多条订单数据副本，每个副本之间唯一的差别就是乘客ID字段。我们取乘客数量在2至5人的网站账户，如果乘客数量过多，这个账户可能是代理账户，并且每位乘客订单比重很小。不适合用于训练乘客预测模型。
+
+除了从数据仓库中直接拉取的账户训练数据外，我们还生成了一份虚拟账户数据。在一些共享账户推荐问题的研究中会用到虚拟账户数据。一般的做法是将两个或多个账户的数据合并为一个账户。由于账户的偏好模型具有较为明显的差异，在研究中可以将每个真实账户的模型视作虚拟账户中的一个成员。使用这类数据可以充分挖掘共享账户中的特征差异。另外，一般的共享账户问题缺少准确的账户成员信息，无法验证实验结果，而使用虚拟账户数据同时可以作评价实验结果的依据。
+
+在我们的问题中，每位乘客的身份信息是明确的，我们生成虚拟账户数据的目的是探究乘客间的偏好差异对乘客预测以及机票推荐准确率的影响。我们的生成策略是在随机的两个账户中取一位乘客，并将这两位乘客合成一个乘客。如果两位乘客有同一个航班在同一起飞日期的订单，我们随机删除一条订单。
+
+\subsubsection{乘客预测与机票推荐的评价指标}
+
+对于一条订单数据，乘客预测的评价指标是预测正确的乘客数量，我们使用下式来评价乘客预测的准确率：
+\begin{equation}
+\label{eq:pass_acc}
+Acc(o_i) = \frac{P' \cap A}{\sqrt{|P'| \times |A|}}
+\end{equation}
+
+式\ref{eq:pass_acc}中，$|P'|$是我们预测的乘客列表，$A$是本条订单实际乘客列表，对每条测试数据而言是一个固定值。其中分子项是预测乘客与实际乘客的交集；分母项是预测乘客与实际乘客各自数量的乘积，是一项惩罚项。可以看出，如果预测乘客与实际乘客集合完全相等，则准确率是1；如果预测乘客没有命中任何一位实际乘客，则准确率是0；在预测准确的乘客数量固定的前提下，预测乘客越多，准确率越低。
+
+对于机票推荐，我们使用式\ref{eq:a-rec}对每条机票推荐准确率进行评价，
+以及式\ref{eq:ma}对每种模型下所有用户的推荐平均准确率进行评价。除此之外，考虑到实际应用场景。
+我们还增加了$Top-N$评价指标：
+
+\begin{equation}
+\label{eq:topn}
+top-N = \frac{\sum_{i=1}^{|M|}|top-N(u_i) \cap O_{u_i}|}{|M|}
+\end{equation}
+
+对一次推荐而言，如果推荐列表中前$N$条候选机票包含了用户实际选择的机票，则认为推荐成功，否则就认为推荐失败。$Top-N$准确率是对所有推荐的平均准确率。可以直观衡量推荐的效果。
+
 
 \subsection{乘客预测准确率}
+本小节我们对乘客预测的准确率进行评价。我们为每个账户训练作者-主题模型，并在测试订单上进行乘客预测。
+\begin{figure}
+\centering
+\subfigure[真实账户乘客预测准确率]{
+ \label{fig:pre_acc_r}
+ \includegraphics[width=0.49\linewidth]{05/4_pred_real.pdf}}
+\subfigure[虚拟账户乘客预测准确率]{
+ \label{fig:pre_acc_a}
+ \includegraphics[width=0.49\linewidth]{05/5_pred_arti.pdf}}
+\bicaption[fig:pred_acc]{乘客预测}{两个数据集上乘客预测准确率}{Fig}{Mean Accuracy for Passenger Prediction on Datasets}
+\end{figure}
+
+图\ref{fig:pred_acc}展示了乘客预测的实验结果。其中图\ref{fig:pre_acc_r}是在真实账户数据集的实验结果；图\ref{fig:pre_acc_a}是在虚拟账户数据集的实验结果。
+其中，横轴是主题数量，范围从5到50共10个取值。进行乘客预测的两种方法分别是作者-主题模型（pATM）预测以及随机预测(Rand)。在随机预测中，我们同样取10个随机值。
+
+可以看到，在真实账户数据集中，随机乘客预测的平均准确率在$57\%$左右，而ATM模型的最高预测准确率是$63\%$。在虚拟账户数据集中，随机乘客预测的平均准确率在$50\%$，因为每个虚拟账户只有两位乘客，而我们每次仅选取一位乘客；并且每条订单的乘客数量也是1。而ATM模型的最高预测准确率是$60\%$。可以看到，在真实数据集中的乘客预测准确率略高与虚拟数据集。
+其原因是预测准确率同时和预测乘客以及实际乘客的数量有关，在不同的数据集上有不同的基准值。而随机算法在一定程度上可以反映出这个基准值。因此我们的主要标准是衡量ATM模型准确率对随机预测算法的提升。
+
+可以看到，在虚拟账户上准确率的提升高于真实帐户。因为虚拟账户的乘客间差异更大，更有利于提取各自的特征。在真实账户数据集，乘客预测的准确率对比与随机预测有所提升。在两个数据集上，预测准确率都与主题的数量相关。当主题数少于15时，预测准确率保持在较高的水平；而随着主题数的增加，准确率有所下降；通过观察训练参数我们发现，过多的主题数会增加参数矩阵的稀疏性，进而影响到预测准确率。在两个数据集上，预测准确率都是在主题数为10的情况下达到最高值，这证明了ATM模型对同构的文档具有较稳定的表现。
+在下一小节机票推荐部分中，我们将乘客预测模型的主题数量固定为10。
 
 
 \subsection{机票推荐准确率}
+本小节我们为账户（用户）进行机票推荐，虽然已经训练了乘客预测模型，并且进行了乘客粒度的特征分布模型学习。在实际应用中，机票推荐还是在用户粒度进行的。我们将从基于排序的推荐准确率和$Top-N$准确率两个角度进行衡量。
+
+\begin{figure}
+\centering
+\subfigure[真实账户推荐准确率]{
+ \label{fig:pre_rec_r}
+ \includegraphics[width=0.49\linewidth]{05/6_rec_rank_r.pdf}}
+\subfigure[虚拟账户推荐准确率]{
+ \label{fig:pre_rec_a}
+ \includegraphics[width=0.49\linewidth]{05/7_rec_rank_a.pdf}}
+\bicaption[fig:pred_rec]{机票推荐}{两个数据集上机票推荐准确率}{Fig}{Mean Accuracy for Flight Ticket Recommendation on Datasets}
+\end{figure}
+
+图\ref{fig:pred_rec}展示了机票推荐的实验结果。其中图\ref{fig:pre_rec_r}是在真实账户数据集的推荐结果；图\ref{fig:pre_rec_a}是在虚拟账户数据集的实验结果。
+其中，横轴是主题数量。进行机票推荐的两种方法分别是结合乘客预测的推荐(pdPre)以及不使用乘客预测的推荐(Pre)。可以看到，推荐结果随着主题数量的变化有较大的波动。并且其变化趋势与乘客预测准确率较为吻合。当主体数量在10到15时，推荐准确率达到峰值；当主题数量在25到30时，推荐效果反而差于不进行乘客预测的推荐。因为此时进行乘客预测的准确率较低，而无法做出有针对性的乘客模型融合。另外，在虚拟数据集上机票推荐准确率低于真实数据集。因为由不同账户抽取出的乘客偏好会有较大差异。如果将其视作一个账户进行偏好建模，会对推荐结果产生影响。同样，虚拟数据集对推荐效果的提升程度高于真实数据集。由此我们可以得出结论：在较高的乘客预测准确率的保障下，乘客间的差异越大，
+结合乘客预测的机票推荐准确率提升越大。
+
+
+\begin{figure}
+\centering
+\subfigure[真实账户推荐Top-N准确率]{
+ \label{fig:pre_top_r}
+ \includegraphics[width=0.49\linewidth]{05/8_rec_top_r.pdf}}
+\subfigure[虚拟账户推荐Top-N准确率]{
+ \label{fig:pre_top_a}
+ \includegraphics[width=0.49\linewidth]{05/9_rec_top_a.pdf}}
+\bicaption[fig:pred_top]{机票推荐Top-N}{两个数据集上机票推荐Top-N准确率}{Fig}{Top-N Accuracy for Flight Ticket Recommendation on Datasets}
+\end{figure}
+
+图\ref{fig:pred_top}展示了机票推荐的实验结果。其中图\ref{fig:pre_top_r}是在真实账户数据集的推荐结果；图\ref{fig:pre_top_a}是在虚拟账户数据集的实验结果。在该实验中，我们将ATM模型的主题数量固定在10。
+其中，横轴是$Top-N$策略中推荐机票的条数。在$Top-N$方法中，我们一并计较了基于低价排序(pRank)和热门程度(hRank)排序的推荐准确率。可以看到，几种基于策略的推荐方法的准确率与基于用户特征分布模型的推荐准确率有较大的差异。并且推荐条数从1到10，结合乘客预测的机票推荐(pdPre)都比不进行乘客预测的机票推荐(Pre)具有更高的准确率。在虚拟数据集上的推荐准确率提升高于真实数据集。
+
 
 \section{本章小结}
+
+本章我们研究了机票用户中的乘客共享账户问题。并基于可以获取账户成员真实信息的场景提出了使用作者-主题模型的乘客预测模型。首先我们预定义了机票特征及上下文词库。在模型训练过程中，我们将每个账户的所有订单作为一个语料库，每条订单作为一个文档，订单的特征取值区间作为一个单词。使用Gibbs取样进行参数推导。并就当前会话的上下文信息给出乘客预测结果。
+
+得到乘客预测结果后，我们将乘客预测结合到机票推荐流程中。我们介绍了推荐流程的概况以及为用户更新ATM模型的过程。使得该模型具有实际应用价值。在实验章节，我们对乘客预测和结合乘客预测的机票推荐进行了数据实验并分析了实验结果。可以说明，ATM模型对乘客预测的准确率有较好的提升效果，并且结合了乘客预测的特征分布模型可以提升个性化机票推荐的准确率。

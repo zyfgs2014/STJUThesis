@@ -69,8 +69,8 @@ $K$ & 主题数量\\ \hline
        \item 对于订单中的每一个词汇
               \begin{enumerate}[fullwidth,itemindent=2em,label=(\roman*)]
               \item 按均匀分布从$P$中抽取一位乘客 $X_{oi} \sim Uniform(P)$
-              \item 从乘客-主题矩阵中抽取一个主题 $Z_{oi} \sim Discrete(\theta_{X_{oi}})$
-              \item 从主题-词汇矩阵中抽取一个单词 $w_{oi} \sim Discrete(\phi_{Z_{oi}})$
+              \item 从乘客-主题矩阵中抽取一个主题 $Z_{oi} \sim Multi(\theta_{X_{oi}})$
+              \item 从主题-词汇矩阵中抽取一个单词 $w_{oi} \sim Multi(\phi_{Z_{oi}})$
               \end{enumerate}
        \end{enumerate}
 \end{enumerate}

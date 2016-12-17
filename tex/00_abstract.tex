@@ -1,11 +1,6 @@
-%# -*- coding: utf-8-unix -*-
-%%==================================================
-%% abstract.tex for SJTU Master Thesis
-%%==================================================
-
 \begin{abstract}
 
-随着在线旅游业的发展，在线机票订购业务为用户提供在线选购机票的服务支持。虽然其丰富了用户的选择，但对于一些热门航线，搜索结果中的候选机票的数量过多。增加了用户的选择成本，降低了交互效率。如果能够根据每位用户的偏好，为用户从候选机票中推荐满足用户偏好的机票，可以更有效地克服机票购买中信息过载问题。
+在线机票订购的迅猛发展为用户提供在线选购机票的服务支持。虽然其丰富了用户的选择，但对于一些热门航线，搜索结果中的候选机票的数量过多。增加了用户的选择成本，降低了交互效率。如果能够根据每位用户的偏好，为用户从候选机票中推荐满足用户偏好的机票，可以更有效地克服机票购买中信息过载问题。
 
 论文主要研究了用户偏好建模及机票推荐。结合机票价格动态变化的特征并根据机票选购的实际业务场景，提出了基于内容的方法为用户提供个性化机票推荐。其后，论文分析了机票推荐中仍存在的一些问题，并细化了推荐场景，进一步提升机票推荐的准确率。文章的主要工作体现在以下几个方面：
 
@@ -20,14 +15,21 @@
 \textbf{关键词：} 机票推荐，冷启动，主题模型，共享账户，隐性特征
 \end{abstract}
 
-
-
-
-
-
 \begin{englishabstract}
 
+Recent years, there are many passengers booking flights through online travel agencies. Typically, an user may search his travel information, then he will get a result containing dozens of candidate flights. Thus a recommender system is necessary for better user experiences.
 
-\englishkeywords{\large SJTU, master thesis, XeTeX/LaTeX template}
+This thesis mainly researches user preference based flight recommendation. We propose content-based recommendation approaches based on dynamic features of flights. In addation, we analyse some existing problems in flight recommendation, and improve recommendation further more. The main work of thesis is reflected as follow:
+
+1.We propose a feature distribution based preference model and flight recommendation approach. We analyse significant features of flight ticket and construct user preference model based on their historical orders. We then come up with a recommendation scene simulating to real flight ticket booking.
+
+2.We research the cold start problem. The problem is classified to two aspects, including cold start at aimed air route and cold start at all air routes. For the former one, we propose methods to evaluate similarity between air routes and construct a mixture preference model. For the latter problem, we take social relationship between users into consider, we then combine preference of them to improve recommendation.
+
+3.We research shared account problem. It is quite common that a passenger books flights for his family members or colleagues. It is likely that every passenger has his own preferences. Unfortunately, before placing the order, people will not provide passengers' information. We may predict who are going to fly to improve recommendation. We use a author-topic model to predict passengers and combine the result into flight recommendation.
+
+4.We propose a recommendation algorithm based on latent factor. We notice that users' preferenfce may alter at different takeoff dates, such as workday, weekend and holiday. We transform explicit features to latent factors, thus to capture the change of user' preference. Finally we provide recommendaiton combined with explicit features and latent factors.
+
+
+\textbf{Keywords:} Flight Recommendation，Cold Start，Topic Model，Shared Account，Latent Factor.
 \end{englishabstract}
 

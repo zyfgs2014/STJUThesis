@@ -61,7 +61,7 @@
 \RequirePackage{graphicx}
 \RequirePackage{subfigure}
 \RequirePackage{ccaption}
-\RequirePackage[backend=biber, style=caspervector,utf8, bibencoding=utf8, sorting=none]{biblatex}
+%\RequirePackage[backend=biber, style=caspervector,utf8, bibencoding=utf8, sorting=none]{biblatex}
 \RequirePackage{xcolor}
 \RequirePackage{wasysym}
 \RequirePackage{listings}
@@ -76,6 +76,8 @@
 \RequirePackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
 
+
+\bibliographystyle{GBT7714-2005NLang}
 %==========
 % Segment 2. Define general-purpose LaTeX commands.
 %==========
@@ -128,8 +130,8 @@
 \ctexset{listfigurename={\sjtu@listfigurename}}
 \ctexset{listtablename={\sjtu@listtablename}}
 \floatname{algorithm}{\sjtu@label@algo}
-\renewcommand{\algorithmicrequire}{\textbf{输入:}} 
-\renewcommand{\algorithmicensure}{\textbf{输出:}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} 
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
 \renewcommand{\listalgorithmname}{\sjtu@listalgorithmname}
 \renewcommand{\lstlistingname}{\sjtu@value@listingname}
 

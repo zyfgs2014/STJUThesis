@@ -21,9 +21,10 @@
 
 %% font settings
 \usepackage{thesisfonts_external}
-
+\usepackage[super,square,numbers,sort&compress]{natbib}
 % 逐个导入参考文献数据库
-\addbibresource{bib/thesis.bib}
+%\addbibresource{bib/thesis.bib}
+
 % \addbibresource{bib/chap2.bib}
 
 \begin{document}
@@ -72,17 +73,18 @@
 %% 正文内容
 \pagestyle{main}
 \include{tex/01_intro}
-\include{tex/02_related}
-\include{tex/03_baseline}
+%\include{tex/02_related}
+%\include{tex/03_baseline}
 
-\include{tex/06_coldstart}
-\include{tex/05_share}
-\include{tex/04_latent}
-\include{tex/07_summary}
+%\include{tex/06_coldstart}
+%\include{tex/05_share}
+%\include{tex/04_latent}
+%\include{tex/07_summary}
 
 
 %% 参考资料
-\printbibliography[heading=bibintoc]
+%\printbibliography[heading=bibintoc]
+\bibliography{bib/thesis}
 
 \appendix % 使用英文字母对附录编号，重新定义附录中的公式、图图表编号样式
 \renewcommand\theequation{\Alph{chapter}--\arabic{equation}}  

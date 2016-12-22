@@ -134,17 +134,17 @@ $w_f$代表特征权重。$\sigma_f$是特征局部相似度衡量方法。在�
 得到用户在最优相似航线的修正模型后，我们将修正模型与用户在目标航线上的模型进行整合。若用户在目标航线没有历史订单，则可以直接使用修正模型；否则，由于用户在目标航线建模使用的订单数量很少，而学习修正模型使用的订单较为充足，并且修正模型也去除了不同航线分布产生的影响，最大限度地降低了模型差异。我们可以将两个模型按等权重线性相加，得到结合最优相似航线的修正混合模型，就可以使用该模型为用户进行机票推荐。
 
 \begin{algorithm}
-\caption{航线冷启动用户修正混合模型}
+\caption{Mixture preference model for air route cold start users}
 \label{algo:air_cold_dis}
 \begin{algorithmic}[1]
 \Require
-\Statex 用户全航线历史订单 $O$
-\Statex 机票特征集合 $F$
-\Statex 目标推荐航线 $r_a$
-\Statex 各航线总体特征分布 $M$
+\Statex User's historical flight orders $O$
+\Statex Flight feature set $F$
+\Statex Aimed air routes $r_a$
+\Statex Feature distribution of each air route $M$
 
 \Ensure 
-\Statex 修正混合特征分布模型 $D_{mix}$
+\Statex Mixture preference model $D_{mix}$
 
 \State $P \gets routePartition(O,r_a)$;
 \For { $r \in P$}
@@ -265,15 +265,15 @@ $UP(U_1,U_2)$代表两个用户共同乘客（User-Passenger）数量。分母�
 如果候选用户在目标航线上不是冷启动用户，则将候选用户的特征分布模型与源用户的模型线性相加；反正，则采取类似航线冷启动用户的模型修正策略，将候选用户在与目标航线最相似航线上的模型与源用户的模型相加。
 
 \begin{algorithm}
-\caption{增强用户模型}
+\caption{Amplified user preference model for cold start users}
 \label{algo:all_cold}
 \begin{algorithmic}[1]
 \Require
-\Statex 用户全航线历史订单 $O$
-\Statex 机票特征集合 $F$
+\Statex User's historical flight orders $O$
+\Statex Flight feature set $F$
 
 \Ensure 
-\Statex 增强用户特征分布模型 $D_{amp}$
+\Statex Amplified user preference model $D_{amp}$
 
 \State $U \gets getRelatedUsers(u_a)$
 \State $Rank\_list \gets \emptyset$

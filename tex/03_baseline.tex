@@ -104,16 +104,16 @@ $F$为机票的特征集合，$W(f)$为目标用户在特征$f$上的权重，$f
 进行重新排序就得到了针对该用户的个性化推荐结果。我们可以给出如下推荐算法：
 
 \begin{algorithm}
-\caption{基于特征分布模型的机票推荐算法}
+\caption{Feature Distribution Based Flight Recommendation}
 \label{algo:pref_rec}
 \begin{algorithmic}[1]
 \Require
-\Statex 用户本航线历史订单 $O$
-\Statex 机票特征集合 $F$
-\Statex 搜索结果列表 $C$
+\Statex User's historical flight orders $O$
+\Statex Flight feature set $F$
+\Statex List of candidate flights $C$
 
 \Ensure 
-\Statex 排序后的机票列表 $R$
+\Statex List of re-ordered flight tickets $R$
 
 \State $D \gets extractDistribution(O,F)$;
 \State $W \gets getWeight(O,F)$;
@@ -132,14 +132,14 @@ $F$为机票的特征集合，$W(f)$为目标用户在特征$f$上的权重，$f
 
 
 \begin{algorithm}[!h]
-\caption{用户特征分布模型}
+\caption{Learning of feature distribution based user preference model}
 \label{algo:pref_cal}
 \begin{algorithmic}[1]
 \Require
-\Statex 用户本航线历史订单 $O$
-\Statex 机票特征集合 $F$
+\Statex User's historical flight orders $O$
+\Statex Flight feature set $F$
 \Ensure
-\Statex 用户的特征分布模型 $D$
+\Statex User preference model $D$
 
 \Function {extractDistribution}{$O, F$}
 \State $D \gets \emptyset$;

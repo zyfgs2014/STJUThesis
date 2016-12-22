@@ -21,7 +21,8 @@
 
 %% font settings
 \usepackage{thesisfonts_external}
-\usepackage[super,square,numbers,sort&compress]{natbib}
+\usepackage[square,numbers,sort&compress]{natbib}
+\usepackage[nottoc]{tocbibind}
 % 逐个导入参考文献数据库
 %\addbibresource{bib/thesis.bib}
 
@@ -58,6 +59,7 @@
 \cleardoublepage
 \pdfbookmark{\contentsname}{toc}
 \tableofcontents
+
 \iffalse
 \listoffigures
 \addcontentsline{toc}{chapter}{\listfigurename} %将插图目录加入全文目录
@@ -66,7 +68,6 @@
 \listofalgorithms
 \addcontentsline{toc}{chapter}{算法索引}        %将算法目录加入全文目录
 \fi
-%\include{tex/symbol} % 主要符号、缩略词对照表
 
 \mainmatter	% 使用阿拉伯数字对正文编号
 
@@ -74,13 +75,12 @@
 \pagestyle{main}
 \include{tex/01_intro}
 \include{tex/02_related}
-%\include{tex/03_baseline}
+\include{tex/03_baseline}
 
-%\include{tex/06_coldstart}
-%\include{tex/05_share}
-%\include{tex/04_latent}
-%\include{tex/07_summary}
-
+\include{tex/06_coldstart}
+\include{tex/05_share}
+\include{tex/04_latent}
+\include{tex/07_summary}
 
 %% 参考资料
 %\printbibliography[heading=bibintoc]
